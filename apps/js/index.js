@@ -11,6 +11,11 @@ $('.menu a').each(function (index) {
   var thismenuItem        = $(this);
   thismenuItem.click(function (event) {
     event.preventDefault();
+    console.log(event);
+    $( "#appTxt" ).fadeToggle( "slow", "linear", function(){
+     // console.log(event.dataset.description);
+      $("#appTxt" ).html($(this).data("description"));
+    });
    
     
     $('.menuitem-wrapper').eq(index).addClass('spin');
@@ -20,6 +25,11 @@ $('.menu a').each(function (index) {
       $('.menuitem-wrapper').eq(index).removeClass('spin');
       $('.menu').removeClass('open');
       $('.menu-btn').removeClass('clicked');
+      $( "#appTxt" ).fadeToggle( "slow", "linear" );
+      setTimeout(function(){
+        console.log("termino "+ index);
+        
+      },2000)
     }, 800);
   });
 });

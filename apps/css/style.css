@@ -3,6 +3,7 @@ body {
   box-sizing: border-box;
   -webkit-transition: all 0.25s ease-in;
   transition: all 0.25s ease-in;
+  font-family: 'Nunito', sans-serif;
 }
 
 *, *:before, *:after {
@@ -468,4 +469,14 @@ a {
     -webkit-transform: scale(1);
             transform: scale(1);
   }
+}
+
+.contenido{
+  width: 100%;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin-top: 25%;
+
+
 }
