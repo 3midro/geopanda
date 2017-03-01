@@ -1,43 +1,22 @@
 <?php
-    $n = $_POST['name'];
-    $e = $_POST['email'];
-    $p = $_POST['phone'];
-    $m = $_POST['comments'];
+    include("php/PHPMailerEasy.php");
+    $n = (isset($_POST["name"]))?$_POST['name']:'Edd';
+    $to = (isset($_POST["email"]))?$_POST['email']:'3midro@gmail.com';
+    $p = (isset($_POST["phone"]))?$_POST['phone']:'4492599033';
+    $m = (isset($_POST["comments"]))?$_POST['comments']:'Es un hecho establecido hace demasiado tiempo que un lector se distraerá con el contenido del texto de un sitio mientras que mira su diseño. El punto de usar Lorem Ipsum es que tiene una distribución más o menos normal de las letras, al contrario de usar textos como por ejemplo "Contenido aquí, contenido aquí". Estos textos hacen parecerlo un español que se puede leer. Muchos paquetes de autoedición y editores de páginas web usan el Lorem Ipsum como su texto por defecto, y al hacer una búsqueda de "Lorem Ipsum" va a dar por resultado muchos sitios web que usan este texto si se encuentran en estado de desarrollo. Muchas versiones han evolucionado a través de los años, algunas veces por accidente, otras veces a propósito (por ejemplo insertándole humor y cosas por el estilo';
+   
     
-   require 'php/PHPMailerAutoload.php';
-   $mail = new PHPMailer;
-
-    //$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'mail.geopanda.com.mx';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'geopanda@geopanda.com.mx';                 // SMTP username
-    $mail->Password = 'Eadminis1a_';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
-
-    $mail->setFrom('geopanda@geopanda.com.mx', 'Mailer');
-    //$mail->addAddress('3midro@gmail.com', 'Joe User');     // Add a recipient
-    $mail->addAddress($e, $n);     // Add a recipient
-    //$mail->addAddress('emidro@hotmail.com');               // Name is optional
-    $mail->addReplyTo('geopanda@geopanda.com.mx', 'Information');
-    $mail->addCC('cc@example.com');
-    $mail->addBCC('bcc@example.com');
-
-   // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-//    $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-    $mail->isHTML(true);                                  // Set email format to HTML
-
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    if(!$mail->send()) {
-        echo 'Message could not be sent.';
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
+    //email respuesta para el usuario
+    $text = file_get_contents('emailTemplate/user.html');
+    $text = str_replace('[NAME]', $n, $text);
+    $text = str_replace('[EMAIL]', $to, $text);
+    echo $text;
+    $subject= "Geopanda contact";
+    $send = PHPMailerEasy::Email($to, $subject, $text);
+    if($send == "ok") {
+      echo "Message was sent successfully";
     } else {
-        echo 'Message has been sent';
+      echo "Can't send message";
     }
 
 ?>
